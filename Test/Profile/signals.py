@@ -5,8 +5,7 @@ from django.dispatch import receiver
 from .models import DbLog, IpUsers, CustomUser, LogStore
 
 
-@receiver(post_save, sender=LogStore)
-@receiver(post_save, sender=CustomUser)
+@receiver(post_save)
 def log_change_db(sender, **kwargs):
     print("ddsdsdfsdfgd---------------------")
     log = DbLog(model=sender.__name__, action='EDT')

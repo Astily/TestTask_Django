@@ -5,4 +5,4 @@ class ProfileConfig(AppConfig):
     name = 'Profile'
 
     def ready(self):
-        import Profile.signals.handlers
+        import Profile.signals

@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile {{ profile.last_name }} {{ profile.first_name }}</title>
+    <link rel="stylesheet" href="{% static 'profile/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'profile/css/base.css' %}">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,700&amp;subset=cyrillic-ext" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@2.0.0-rc.11/dist/bootstrap-vue.css"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+
+
+
+</head>
+<body class="bg-secondary">
+<div id="app" class="d-flex  no-gutters">
+    <div class=" bg-dark shadow-lg">
+        <div class="left-bar">
+
+        <ul class="nav flex-column">
+
+  <li class="nav-item text-center icon-nav">
+    <a v-b-popover.hover="'На главную'" class="nav-link" href="#"><i class="fas fa-home"></i></a>
+  </li>
+  <li class="nav-item text-center icon-nav">
+    <a class="nav-link disabled" href="#"><i class="fas fa-money-bill-wave"></i></a>
+  </li>
+</ul>
+        </div>
+    </div>
+    <div class="flex-grow-1 d-flex flex-column ">
+            <header class="header">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light shadow ">
+                    <div class="container">
+                  <div class="navbar-brand text-secondary font-weight-bold" href="#">Profile</div>
+
+
+
+                    <div class="navbar-nav mr-auto">
+
+                    </div>
+                    <div class="navbar-nav my-2 my-lg-0">
+                        {% if user.is_authenticated %}
+                        <b-dropdown text="{{ user.username }}"  variant="outline-secondary" class="nav-item" right>
+                            <b-dropdown-item href="{{ edit }}">Редактировать</b-dropdown-item>
+                            <b-dropdown-divider></b-dropdown-divider>
+                            <b-dropdown-item href="{% url 'logout' %}">Выйти</b-dropdown-item>
+                          </b-dropdown>
+                        {% else %}
+                            <b-button text="LogIn" variant="outline-secondary" class="nav-item" href="{% url 'login'%}">LogIn</b-button>
+
+                        {% endif %}
+
+
+                    </div>
+
+                        </div>
+                </nav>
+                </header><!-- header -->
+
+
+
+                        <div class="container flex-fill d-flex flex-wrap flex-md-nowrap  align-items-stretch  bd-highlight  main-context shadow-lg  mb-5 bg-white rounded">
+                        <div class="bd-highlight text-left user-block">
+                                <div class="user-wrap">
+                                <h1 class="text-right name-user">{{ profile.last_name }} {{ profile.first_name }}</h1>
+                                <p class="birth-user text-left text-md-right"> {{ profile.birth }} </p>
+                                    <img src="https://www.w3schools.com/w3css/img_avatar3.png"  alt="" class="user-avatar rounded-circle">
+                                </div>
+
+                            </div>
+                            <div class=" flex-grow-1 bd-highlight">
+                                <ul class="list-unstyled contacts pull-right">
+                                    <li><i class="fa fa-phone"></i> <span>{{ profile.phone }}</span></li>
+                                    <li><i class="fa fa-envelope-o"></i> <span>{{ profile.emailPublic }}</span></li>
+                                </ul>
+
+                                <p class="text-left bio-user">
+
+                                <p>{{ profile.biography |linebreaks }}</p>
+                            </div>
+
+
+
+                        </div><!-- row -->
+
+
+
+
+
+
+    </div>
+</div>
+<script>
+    window.onload = function() {
+  new Vue({
+ el: '#app'
+  })
+}
+</script>
+</body>
+</html>

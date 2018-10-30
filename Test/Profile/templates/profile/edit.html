@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit {{ profile.last_name }} {{ profile.first_name }}</title>
+    <link rel="stylesheet" href="{% static 'profile/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'profile/css/base.css' %}">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,700&amp;subset=cyrillic-ext" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@2.0.0-rc.11/dist/bootstrap-vue.css"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+
+            <script type="text/javascript" src="/jsi18n/"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}"/>
+
+
+
+</head>
+<body class="bg-secondary">
+<div id="app" class="d-flex  no-gutters">
+    <div class=" bg-dark shadow-lg">
+        <div class="left-bar">
+
+        <ul class="nav flex-column">
+
+  <li class="nav-item text-center icon-nav">
+    <a v-b-popover.hover="'На главную'" class="nav-link" href="#"><i class="fas fa-home"></i></a>
+  </li>
+  <li class="nav-item text-center icon-nav">
+    <a class="nav-link disabled" href="#"><i class="fas fa-money-bill-wave"></i></a>
+  </li>
+</ul>
+        </div>
+    </div>
+    <div class="flex-grow-1 d-flex flex-column ">
+            <header class="header">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light shadow ">
+                    <div class="container">
+                  <div class="navbar-brand text-secondary font-weight-bold" href="#">Edit profile</div>
+
+
+
+                    <div class="navbar-nav mr-auto">
+
+                    </div>
+                    <div class="navbar-nav my-2 my-lg-0">
+
+                        <b-dropdown id="ddown1" text="{{ user.username }}"  variant="outline-secondary" class="nav-item" right>
+                            <b-dropdown-item href="{{ edit }}">Редактировать</b-dropdown-item>
+                            <b-dropdown-divider></b-dropdown-divider>
+                            <b-dropdown-item href="{% url 'logout'%}">Выйти</b-dropdown-item>
+                          </b-dropdown>
+
+
+                    </div>
+
+                        </div>
+                </nav>
+                </header><!-- header -->
+
+
+
+                        <div class="container flex-fill  bd-highlight  main-context shadow-lg  mb-5 bg-white rounded">
+
+
+    <form method="POST" class="post-form">{% csrf_token %}
+        <div class="d-flex align-items-stretch justify-content-center">
+        <div class="">
+        {% for field in form %}
+            {% if field.name != "biography" %}
+            <p>{{ field.label_tag }}<br> {{ field }}</p>
+            {% endif %}
+        {% endfor %}
+            </div>
+<div class="flex-fill align-self-stretch px-5 d-flex flex-column justify-content-start">
+        {{ form.biography.label_tag }}<br>{{ form.biography  }}
+    </div>
+            </div>
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+
+</div><!-- row -->
+
+
+
+
+
+
+    </div>
+</div>
+<script>
+    window.onload = function() {
+  new Vue({
+ el: '#app'
+  })
+}
+</script>
+</body>
+</html>

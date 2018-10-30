@@ -26,13 +26,13 @@ class LogStore(models.Model):
 
 
 class CustomUser(AbstractUser):
-    birth = models.DateField(blank=True)
-    biography = models.TextField(blank=True)
-    emailPublic = models.EmailField(blank=True)
+    birth = models.DateField(default='1979-01-01')
+    biography = models.TextField(default='')
+    emailPublic = models.EmailField(default='a@s.s')
 
     phone_regex = RegexValidator(regex=r'^\+\d{9,15}$',
                                  message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-    phone = models.CharField(validators=[phone_regex], max_length=16, blank=True)
+    phone = models.CharField(validators=[phone_regex], max_length=16, default='+0001234567')
 
     def __str__(self):
         return self.email

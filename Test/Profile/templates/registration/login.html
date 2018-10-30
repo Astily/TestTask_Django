@@ -6,7 +6,8 @@
     <title>LogIn</title>
     <link rel="stylesheet" href="{% static 'profile/css/bootstrap.min.css' %}">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,700&amp;subset=cyrillic-ext" rel="stylesheet">
 
@@ -18,76 +19,64 @@
     <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 
 
-
-
 </head>
 <body class="bg-dark">
 <div id="app" class="d-flex justify-content-center align-items-center" style="height:100vh;">
 
 
+    <div class="login bg-light shadow py-3 px-5 mb-5 border border-white rounded">
 
 
-<div class="login bg-light shadow py-3 px-5 mb-5 border border-white rounded">
+        {% if user.is_authenticated %}
+            {% if next %}
+                <p>Your account doesn't have access to this page. To proceed,
+                    please login with an account that has access.</p>
+            {% endif %}
+        {% else %}
+            <h1 class="display-4 text-right">
+                <div style="font-size:3rem">Please login</div>
+            </h1>
+            {% if next %}
+                <h1 class="display-4 text-right">
+                    <div class="small text-muted " style="font-size:2rem">to see this page.</div>
+                </h1>
+            {% endif %}
+        {% endif %}
 
 
-{% if user.is_authenticated %}
-    {% if next %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% endif %}
-{% else %}
-    <h1 class="display-4 text-right">
-    <div style="font-size:3rem">Please login</div>
-    </h1>
-    {% if next %}
-    <h1 class="display-4 text-right">
-    <div class="small text-muted " style="font-size:2rem">to see this page.</div>
-    </h1>
-    {% endif %}
-{% endif %}
-
-
-
-    <b-form @submit="onSubmit" method="post" action="{% url 'login' %}" v-if="show">
-        {% csrf_token %}
-        <b-form-group id="UsernameInputGroup"
-                    label="Username:"
-                    label-for="UsernameInput">
-        <b-form-input id="UsernameInput"
-                      type="text"
-                      name="username"
-                      v-model="form.username"
-                      required
-                      placeholder="Enter username">
-        </b-form-input>
-      </b-form-group>
-        <b-form-group id="PasswordInputGroup"
-                    label="Password:"
-                    label-for="PasswordInput">
-        <b-form-input id="PasswordInput"
-                      type="password"
-                      name="password"
-                      v-model="form.password"
-                      required
-                      placeholder="Enter password">
-        </b-form-input>
+        <b-form @submit="onSubmit" method="post" action="{% url 'login' %}" v-if="show">
+            {% csrf_token %}
+            <b-form-group id="UsernameInputGroup"
+                          label="Username:"
+                          label-for="UsernameInput">
+                <b-form-input id="UsernameInput"
+                              type="text"
+                              name="username"
+                              v-model="form.username"
+                              required
+                              placeholder="Enter username">
+                </b-form-input>
+            </b-form-group>
+            <b-form-group id="PasswordInputGroup"
+                          label="Password:"
+                          label-for="PasswordInput">
+                <b-form-input id="PasswordInput"
+                              type="password"
+                              name="password"
+                              v-model="form.password"
+                              required
+                              placeholder="Enter password">
+                </b-form-input>
             </b-form-group>
             <b-button type="submit" variant="primary">Login</b-button>
-        <input type="hidden" name="next" value="{{ next }}" />
-            </b-form>
+            <input type="hidden" name="next" value="{{ next }}"/>
+        </b-form>
 
-
-    {% if form.errors %}
-    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-<p class="text-danger">Your username and password didn't match.<br> Please try again.</p>
-{% endif %}
-
-
-
-
-
-</div>
-
+        {% if form.errors %}
+            <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+            <p class="text-danger">Your username and password didn't match.<br> Please try again.</p>
+        {% endif %}
+    </div>
 
 
 </div>

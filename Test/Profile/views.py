@@ -9,15 +9,14 @@ from .models import CustomUser, IpUsers
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return HttpResponse("You're at the polls index. Section in development")
 
-# USE CBM
 
 def profile(request, profile_id):
     try:
         profile = CustomUser.objects.get(pk=profile_id)
     except CustomUser.DoesNotExist:
-        raise Http404("Question does not exist")
+        raise Http404("Profile does not exist")
     return render(request, 'profile/profile.html', {'profile': profile, 'edit': reverse('edit')})
 
 
@@ -28,8 +27,6 @@ def edit_profile(request):
         form = CustomUserForm(request.POST, instance=profile_obj)
         if form.is_valid():
             post = form.save(commit=False)
-
-            #post.IpUsers_set.create("192.168.22.22")
             ip = request.META.get('REMOTE_ADDR', '') or request.META.get('HTTP_X_FORWARDED_FOR', '')
             userIp = IpUsers(user=post, ip=ip)
             userIp.save()
@@ -40,10 +37,10 @@ def edit_profile(request):
         form = CustomUserForm(instance=profile_obj)
     return render(request, 'profile/edit.html', {'form': form})
 
+
 def home(request):
     user = request.user
     if user.is_authenticated:
-        print(12312)
         return redirect('profile', profile_id=user.pk)
     else:
         return redirect('login')

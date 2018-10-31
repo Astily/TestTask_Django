@@ -17,11 +17,11 @@ class YourTestClass(TestCase):
 
     def test_html_status_anonymus(self):
         c = Client()
-        st = c.get(reverse('profile', args=[1])).status_code
+        st = c.get(reverse('edit')).status_code
         self.assertEquals(st, 302)
 
     def test_html_status_autorized(self):
-        login = self.client.post('/accounts/login/', {'username': 'test_user', 'password': '1111'})
+        login = self.client.post('/edit/', {'username': 'test_user', 'password': '1111'})
         st = self.client.get(reverse('profile', args=[1])).status_code
         self.assertEquals(st, 200)
 
@@ -33,22 +33,23 @@ class YourTestClass(TestCase):
 
     def test_edit_page(self):
         data = {'first_name': 'Tom', 'last_name': 'Wild', 'birth': '1990-01-10', 'biography': 'Bla-Bla-Bla',
-                'emailPublic': 'a@b.c', 'phone': '0971212343'}
+                'emailPublic': 'aa@bb.cc', 'phone': '+380971212343'}
         c = self.client.get(reverse('edit'))
         self.assertEquals(c.status_code, 302)
 
-        login = self.client.post('/accounts/login/', {'username': 'test_user', 'password': '1111'})
+        login = self.client.post(reverse('login'), {'username': 'test_user', 'password': '1111'})
         c = self.client.get(reverse('edit'))
         self.assertEquals(c.status_code, 200)
 
         c = self.client.post(reverse('edit'), data)
-        print(c.content)
         self.assertEquals(c.status_code, 302)
 
         form = CustomUserForm(data=data)
-        self.assertFalse(form.is_valid())
+        self.assertTrue(form.is_valid())
 
 
         user = CustomUser.objects.get(pk=1)
-        print(user.first_name)
+        self.assertEquals(user.first_name, data['first_name'])
+        self.assertEquals(user.biography, data['biography'])
+
 

@@ -2,20 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
 
-'''
-class Profile(models.Model):
-    firstName = models.CharField(max_length=25)
-    lastName = models.CharField(max_length=25)
-    birth = models.DateField()
-    biography = models.TextField()
-    email = models.EmailField()
-    phone = models.IntegerField()
-
-
-    def __str__(self):
-        return self.firstName + ' ' + self.lastName
-'''
-
 
 class LogStore(models.Model):
     executionTime = models.TimeField()

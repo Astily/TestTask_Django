@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit {{ profile.last_name }} {{ profile.first_name }}</title>
+
     <link rel="stylesheet" href="{% static 'profile/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}"/>
     <link rel="stylesheet" href="{% static 'profile/css/base.css' %}">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
@@ -19,20 +21,6 @@
     <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
     <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 
-
-    <script type="text/javascript" src="/jsi18n/"></script>
-    <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
-    <script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
-
-    <script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
-
-
-    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}"/>
-
-
 </head>
 <body class="bg-secondary">
 <div id="app" class="d-flex  no-gutters">
@@ -42,7 +30,7 @@
             <ul class="nav flex-column">
 
                 <li class="nav-item text-center icon-nav">
-                    <a v-b-popover.hover="'На главную'" class="nav-link" href="#"><i class="fas fa-home"></i></a>
+                    <a v-b-popover.hover="'На главную'" class="nav-link" href="/"><i class="fas fa-home"></i></a>
                 </li>
                 <li class="nav-item text-center icon-nav">
                     <a class="nav-link disabled" href="#"><i class="fas fa-money-bill-wave"></i></a>
@@ -64,7 +52,7 @@
 
                         <b-dropdown id="ddown1" text="{{ user.username }}" variant="outline-secondary" class="nav-item"
                                     right>
-                            <b-dropdown-item href="{{ edit }}">Редактировать</b-dropdown-item>
+                            <b-dropdown-item href="{% url 'home' %}">Отменить</b-dropdown-item>
                             <b-dropdown-divider></b-dropdown-divider>
                             <b-dropdown-item href="{% url 'logout'%}">Выйти</b-dropdown-item>
                         </b-dropdown>
